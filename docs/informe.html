@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Despliegue de un CRM con Infraestructura como Código en AWS</title>
+<style>
+  /* Membrete ITM 2026: mismas medidas de "hoja membrete carta 2026.docx" (carta, márgenes 3 / 3 / 3,5 cm) */
+  @page { size: Letter; margin: 0; }
+  .lh-header { position: fixed; top: 0.15in; left: 0.02in; width: 8.47in; }
+  .lh-footer { position: fixed; bottom: 0; left: 0; width: 8.5in; }
+  .lh-header img, .lh-footer img { display: block; width: 100%; border: none; }
+  table.frame { width: 100%; border-collapse: collapse; margin: 0; font-size: inherit; page-break-inside: auto; }
+  table.frame > thead > tr > td, table.frame > tfoot > tr > td, table.frame > tbody > tr > td { border: none; padding: 0; }
+  .frame-top { height: 1.18in; }
+  .frame-bottom { height: 1.38in; }
+  * { box-sizing: border-box; }
+  body { font-family: "Times New Roman", Georgia, serif; font-size: 12pt; line-height: 1.5; color: #111; margin: 0; padding: 0 1.18in; }
+  h1, h2, h3 { font-family: "Helvetica Neue", Arial, sans-serif; color: #0b3d66; line-height: 1.25; }
+  h2 { font-size: 16pt; margin: 1.6em 0 .5em; border-bottom: 2px solid #0b3d66; padding-bottom: 4px; page-break-after: avoid; }
+  h3 { font-size: 13pt; margin: 1.2em 0 .4em; page-break-after: avoid; }
+  p { text-align: justify; margin: .5em 0; }
+  table { border-collapse: collapse; width: 100%; margin: .8em 0; font-size: 10.5pt; page-break-inside: avoid; }
+  th, td { border: 1px solid #9aa9b8; padding: 5px 8px; text-align: left; vertical-align: top; }
+  th { background: #e6eef5; font-family: Arial, sans-serif; }
+  pre { background: #f4f6f8; border: 1px solid #d5dde5; border-left: 4px solid #0b3d66; padding: 8px 10px; font-size: 8.8pt; line-height: 1.35; white-space: pre-wrap; page-break-inside: avoid; }
+  code { font-family: Menlo, Consolas, monospace; font-size: 9.5pt; }
+  figure { margin: 1em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; border: 1px solid #c8d2dc; }
+  figcaption { font-size: 10pt; font-style: italic; color: #333; margin-top: 4px; }
+  .cover { height: 20.5cm; display: flex; flex-direction: column; justify-content: space-between; text-align: center; page-break-after: always; }
+  .cover .inst { font-family: Arial, sans-serif; font-weight: bold; font-size: 14pt; letter-spacing: .5px; }
+  .cover h1 { font-size: 24pt; margin: 0 0 .3em; }
+  .cover .sub { font-size: 13pt; color: #333; }
+  .cover .meta { font-size: 12pt; line-height: 1.8; }
+  .toc { page-break-after: always; }
+  .toc ol { line-height: 2; }
+  .refs p { text-indent: -1.27cm; padding-left: 1.27cm; text-align: left; }
+  .pending { border: 2px dashed #c0392b; color: #c0392b; padding: 2.2cm 1em; font-family: Arial, sans-serif; font-size: 10pt; }
+  .small { font-size: 10pt; }
+</style>
+</head>
+<body>
+<div class="lh-header"><img src="membrete/encabezado.jpg" alt="Institución Universitaria ITM"></div>
+<div class="lh-footer"><img src="membrete/pie.jpg" alt="www.itm.edu.co · Alcaldía de Medellín"></div>
+<table class="frame">
+<thead><tr><td><div class="frame-top"></div></td></tr></thead>
+<tfoot><tr><td><div class="frame-bottom"></div></td></tr></tfoot>
+<tbody><tr><td>
+
+<section class="cover">
+  <div class="inst">INSTITUTO TECNOLÓGICO METROPOLITANO – ITM<br>Facultad de Ingenierías</div>
+  <div>
+    <div class="sub">Introducción a Modelos de Informática en la Nube</div>
+    <h1>Despliegue de un CRM con Infraestructura como Código en AWS</h1>
+    <div class="sub">Terraform · Contenedores en ECS Fargate · Bases de datos gestionadas relacional (RDS PostgreSQL) y en memoria (ElastiCache Redis)</div>
+  </div>
+  <div class="meta">
+    <strong>Integrantes</strong><br>
+    Zara Ramírez Ortiz<br>Santiago Álzate Múnera<br>Mateo Bolívar Arroyave<br><br>
+    <strong>Docente:</strong> Enrique José González de la Rosa<br>
+    Medellín, 13 de noviembre de 2026
+  </div>
+</section>
+
+<section class="toc">
+  <h2>Contenido</h2>
+  <ol>
+    <li>Introducción</li>
+    <li>Contexto</li>
+    <li>Objetivos</li>
+    <li>Arquitectura de la solución</li>
+    <li>Implementación con Terraform</li>
+    <li>Despliegue y evidencias</li>
+    <li>Estimación de costos</li>
+    <li>Problemas encontrados y soluciones</li>
+    <li>Conclusiones</li>
+    <li>Referencias bibliográficas</li>
+  </ol>
+</section>
+
+<h2>1. Introducción</h2>
+<p>Este trabajo presenta el diseño y despliegue automatizado de un sistema de gestión de relaciones con clientes (CRM) en la nube pública de Amazon Web Services (AWS), utilizando exclusivamente Infraestructura como Código (IaC) con Terraform. Se eligió la <strong>Opción B</strong> del enunciado: una sola nube en la que la aplicación utiliza <strong>dos tipos de bases de datos gestionadas</strong>, una relacional (Amazon RDS for PostgreSQL) y una en memoria (Amazon ElastiCache for Redis).</p>
+<p>Como aplicación se utilizó <strong>Twenty</strong>, un CRM de código abierto distribuido como imagen de contenedor, que de forma nativa requiere precisamente PostgreSQL y Redis. Los contenedores se ejecutan en Amazon ECS sobre AWS Fargate (sin administrar servidores) y se exponen a internet a través de un Application Load Balancer.</p>
+
+<h2>2. Contexto</h2>
+<h3>2.1 ¿Qué es un CRM?</h3>
+<p>Un CRM (<em>Customer Relationship Management</em>) es un sistema de información que centraliza los datos y las interacciones de una organización con sus clientes actuales y potenciales: empresas, contactos, oportunidades de venta, tareas, notas y comunicaciones. Su propósito es mejorar la retención de clientes, dar visibilidad al embudo comercial y apoyar la toma de decisiones con datos. Productos como Salesforce, HubSpot o Zoho dominan el mercado como SaaS, mientras que alternativas de código abierto como Twenty, SuiteCRM o EspoCRM permiten que la organización aloje la solución en su propia infraestructura y conserve el control de sus datos.</p>
+
+<h3>2.2 Infraestructura como Código</h3>
+<p>La Infraestructura como Código es la práctica de definir redes, servidores, bases de datos y demás recursos en archivos de texto versionables, en lugar de crearlos manualmente desde una consola. Esto permite que la infraestructura sea <strong>reproducible</strong> (el mismo código produce el mismo entorno), <strong>auditable</strong> (los cambios quedan en el control de versiones), <strong>revisable</strong> antes de aplicarse (<code>terraform plan</code>) y <strong>desechable</strong> (<code>terraform destroy</code> elimina todo, evitando costos innecesarios).</p>
+<p><strong>Terraform</strong>, de HashiCorp, es una herramienta IaC declarativa que usa el lenguaje HCL: el usuario describe el estado deseado y Terraform calcula el orden de creación a partir de las dependencias entre recursos, guardando el estado real en un archivo <code>terraform.tfstate</code>. Mediante <em>providers</em> soporta múltiples nubes; en este trabajo se usa el provider oficial <code>hashicorp/aws</code>.</p>
+
+<h3>2.3 Contenedores y bases de datos gestionadas</h3>
+<p>Los contenedores empaquetan una aplicación con todas sus dependencias, de modo que se ejecuta igual en cualquier entorno. <strong>AWS Fargate</strong> ejecuta contenedores sin que el usuario administre máquinas virtuales, y <strong>Amazon ECS</strong> se encarga de mantener el número deseado de réplicas y de registrarlas en el balanceador.</p>
+<p>Las bases de datos <strong>gestionadas</strong> delegan en el proveedor la instalación, parches, copias de seguridad y monitoreo. Una base de datos <strong>relacional</strong> (PostgreSQL) garantiza consistencia transaccional (ACID), integridad referencial y consultas complejas, lo que la hace ideal para los registros de negocio del CRM. Una base de datos <strong>en memoria</strong> (Redis) guarda los datos en RAM con latencias de submilisegundos, ideal para caché, sesiones y colas de trabajos en segundo plano.</p>
+
+<h2>3. Objetivos</h2>
+<h3>Objetivo general</h3>
+<p>Desplegar un CRM contenerizado en AWS que utilice una base de datos relacional y una base de datos en memoria gestionadas, definiendo el 100&nbsp;% de la infraestructura con Terraform.</p>
+<h3>Objetivos específicos</h3>
+<ul>
+  <li>Diseñar una red (VPC) con subredes públicas y privadas que aísle las bases de datos de internet.</li>
+  <li>Aprovisionar Amazon RDS for PostgreSQL y Amazon ElastiCache for Redis como servicios gestionados.</li>
+  <li>Ejecutar los contenedores del CRM (servidor y <em>worker</em>) en ECS Fargate detrás de un balanceador de carga.</li>
+  <li>Manejar las credenciales con AWS Secrets Manager, sin escribir contraseñas en el código.</li>
+  <li>Verificar el funcionamiento extremo a extremo y documentar costos, problemas y lecciones aprendidas.</li>
+</ul>
+
+<h2>4. Arquitectura de la solución</h2>
+<figure>
+<svg viewBox="0 0 760 400" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif" font-size="12">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0b3d66"/></marker></defs>
+  <rect x="5" y="170" width="80" height="44" rx="6" fill="#fff" stroke="#555"/><text x="45" y="190" text-anchor="middle">Usuario</text><text x="45" y="205" text-anchor="middle" font-size="10">navegador</text>
+  <rect x="230" y="20" width="520" height="370" rx="10" fill="#f7fafc" stroke="#0b3d66" stroke-dasharray="6 4"/><text x="242" y="40" font-weight="bold" fill="#0b3d66">AWS us-east-1 · VPC 10.0.0.0/16 (2 zonas de disponibilidad)</text>
+  <rect x="245" y="55" width="270" height="320" rx="8" fill="#e9f6ec" stroke="#2e8b57"/><text x="255" y="73" fill="#2e8b57" font-weight="bold">Subredes públicas</text>
+  <rect x="530" y="55" width="205" height="320" rx="8" fill="#fdecea" stroke="#c0392b"/><text x="540" y="73" fill="#c0392b" font-weight="bold">Subredes privadas</text>
+  <rect x="260" y="165" width="95" height="54" rx="6" fill="#fff" stroke="#e67e22"/><text x="307" y="187" text-anchor="middle" font-weight="bold">ALB</text><text x="307" y="203" text-anchor="middle" font-size="10">HTTP :80</text>
+  <rect x="380" y="95" width="125" height="70" rx="6" fill="#fff" stroke="#e67e22"/><text x="442" y="115" text-anchor="middle" font-size="10">ECS Fargate</text><text x="442" y="132" text-anchor="middle" font-weight="bold">twenty-server</text><text x="442" y="149" text-anchor="middle" font-size="10">1 vCPU · 2 GB · :3000</text>
+  <rect x="380" y="235" width="125" height="70" rx="6" fill="#fff" stroke="#e67e22"/><text x="442" y="255" text-anchor="middle" font-size="10">ECS Fargate</text><text x="442" y="272" text-anchor="middle" font-weight="bold">twenty-worker</text><text x="442" y="289" text-anchor="middle" font-size="10">0.5 vCPU · 1 GB</text>
+  <rect x="550" y="95" width="165" height="70" rx="6" fill="#fff" stroke="#2c5aa0"/><text x="632" y="115" text-anchor="middle" font-size="10">BD relacional</text><text x="632" y="132" text-anchor="middle" font-weight="bold">RDS PostgreSQL 16</text><text x="632" y="149" text-anchor="middle" font-size="10">db.t3.micro · :5432</text>
+  <rect x="550" y="235" width="165" height="70" rx="6" fill="#fff" stroke="#c0392b"/><text x="632" y="255" text-anchor="middle" font-size="10">BD en memoria</text><text x="632" y="272" text-anchor="middle" font-weight="bold">ElastiCache Redis 7.1</text><text x="632" y="289" text-anchor="middle" font-size="10">cache.t3.micro · :6379</text>
+  <rect x="260" y="325" width="245" height="36" rx="6" fill="#fff" stroke="#888"/><text x="382" y="347" text-anchor="middle" font-size="11">Secrets Manager · CloudWatch Logs</text>
+  <g stroke="#0b3d66" stroke-width="1.6" fill="none" marker-end="url(#a)">
+    <path d="M85,192 L258,192"/><path d="M355,185 L378,140"/>
+    <path d="M505,125 L548,125"/><path d="M505,150 L548,255"/><path d="M505,270 L548,270"/><path d="M505,250 L548,150"/>
+  </g>
+</svg>
+<figcaption>Figura 1. Arquitectura desplegada en AWS.</figcaption>
+</figure>
+
+<table>
+  <tr><th>Componente</th><th>Servicio AWS</th><th>Función en la solución</th></tr>
+  <tr><td>Red</td><td>VPC, 2 subredes públicas + 2 privadas, Internet Gateway</td><td>Aislamiento de red en dos zonas de disponibilidad.</td></tr>
+  <tr><td>Balanceo</td><td>Application Load Balancer</td><td>Distribuye tráfico al servidor y verifica su salud en <code>/healthz</code>.</td></tr>
+  <tr><td>Aplicación</td><td>ECS Fargate: <code>twenty-server</code></td><td>Interfaz web y API GraphQL/REST; ejecuta las migraciones de la BD.</td></tr>
+  <tr><td>Procesos de fondo</td><td>ECS Fargate: <code>twenty-worker</code></td><td>Consume la cola de trabajos (BullMQ) almacenada en Redis.</td></tr>
+  <tr><td>BD relacional</td><td>RDS for PostgreSQL 16</td><td>Empresas, personas, oportunidades, usuarios y metadatos del CRM.</td></tr>
+  <tr><td>BD en memoria</td><td>ElastiCache for Redis 7.1</td><td>Caché, sesiones, cola de trabajos y tareas programadas.</td></tr>
+  <tr><td>Secretos</td><td>AWS Secrets Manager</td><td>URL de conexión a PostgreSQL y llave de cifrado de la aplicación.</td></tr>
+  <tr><td>Observabilidad</td><td>CloudWatch Logs</td><td>Logs de ambos contenedores (retención 7 días).</td></tr>
+</table>
+
+<h3>4.1 ¿Por qué dos tipos de bases de datos?</h3>
+<p>Cada motor resuelve un problema distinto. PostgreSQL es la <em>fuente de verdad</em>: los datos comerciales deben ser duraderos, consistentes y consultables con SQL. Redis, en cambio, atiende cargas efímeras y de alta frecuencia —caché de metadatos, sesiones y la cola de trabajos que procesa el <em>worker</em>— donde la latencia importa más que la durabilidad. Separarlos evita sobrecargar la base relacional con operaciones de alta rotación y permite escalar cada una de forma independiente.</p>
+
+<h3>4.2 Seguridad</h3>
+<ul>
+  <li>Las bases de datos viven en subredes privadas sin ruta a internet y con <code>publicly_accessible = false</code>.</li>
+  <li>Grupos de seguridad encadenados: internet → ALB (80) → ECS (3000) → RDS (5432) / Redis (6379). Ningún otro origen puede alcanzar las bases de datos.</li>
+  <li>Contraseñas generadas por Terraform (<code>random_password</code>) y entregadas a los contenedores desde Secrets Manager; nunca aparecen en el código.</li>
+</ul>
+
+<h2>5. Implementación con Terraform</h2>
+<p>El código está organizado en un archivo por responsabilidad:</p>
+<table class="small">
+  <tr><th>Archivo</th><th>Contenido</th></tr>
+  <tr><td><code>versions.tf</code></td><td>Versión de Terraform, providers <code>aws</code> y <code>random</code>, etiquetas por defecto.</td></tr>
+  <tr><td><code>variables.tf</code></td><td>Región, prefijo, versión de la imagen, tamaños de instancia, rol IAM opcional.</td></tr>
+  <tr><td><code>network.tf</code></td><td>VPC, subredes, Internet Gateway y tablas de rutas.</td></tr>
+  <tr><td><code>security.tf</code></td><td>Grupos de seguridad del ALB, ECS, RDS y Redis.</td></tr>
+  <tr><td><code>rds.tf</code> / <code>redis.tf</code></td><td>Bases de datos gestionadas con sus grupos de subredes y de parámetros.</td></tr>
+  <tr><td><code>secrets.tf</code></td><td>Contraseñas aleatorias y secreto en Secrets Manager.</td></tr>
+  <tr><td><code>ecs.tf</code> / <code>alb.tf</code></td><td>Clúster, definiciones de tareas, servicios y balanceador.</td></tr>
+  <tr><td><code>outputs.tf</code></td><td>URL del CRM y endpoints de las bases de datos.</td></tr>
+</table>
+
+<h3>5.1 Base de datos relacional</h3>
+<pre><code>resource "aws_db_instance" "postgres" {
+  identifier     = "${var.project}-postgres"
+  engine         = "postgres"
+  engine_version = "16"
+  instance_class = var.db_instance_class   # db.t3.micro
+  allocated_storage = 20
+  db_name  = "twenty"
+  username = "twenty"
+  password = random_password.db.result
+  db_subnet_group_name   = aws_db_subnet_group.postgres.name
+  vpc_security_group_ids = [aws_security_group.rds.id]
+  publicly_accessible    = false
+  skip_final_snapshot    = true
+}</code></pre>
+
+<h3>5.2 Base de datos en memoria</h3>
+<pre><code>resource "aws_elasticache_parameter_group" "redis" {
+  name   = "${var.project}-redis7"
+  family = "redis7"
+  parameter {
+    name  = "maxmemory-policy"
+    value = "noeviction"   # la cola de trabajos no puede perder llaves
+  }
+}
+
+resource "aws_elasticache_cluster" "redis" {
+  cluster_id           = "${var.project}-redis"
+  engine               = "redis"
+  engine_version       = "7.1"
+  node_type            = var.redis_node_type   # cache.t3.micro
+  num_cache_nodes      = 1
+  parameter_group_name = aws_elasticache_parameter_group.redis.name
+  subnet_group_name    = aws_elasticache_subnet_group.redis.name
+  security_group_ids   = [aws_security_group.redis.id]
+}</code></pre>
+
+<h3>5.3 Contenedores y conexión con las bases de datos</h3>
+<p>Ambos contenedores reciben la URL de Redis como variable de entorno y la URL de PostgreSQL como secreto; el <em>worker</em> desactiva las migraciones porque estas ya las ejecuta el servidor:</p>
+<pre><code>common_environment = [
+  { name = "SERVER_URL",   value = local.server_url },
+  { name = "REDIS_URL",    value = "redis://${aws_elasticache_cluster.redis.cache_nodes[0].address}:6379" },
+  { name = "STORAGE_TYPE", value = "local" },
+]
+common_secrets = [
+  for key in ["PG_DATABASE_URL", "ENCRYPTION_KEY", "APP_SECRET"] :
+  { name = key, valueFrom = "${aws_secretsmanager_secret.twenty.arn}:${key}::" }
+]
+
+resource "aws_ecs_task_definition" "worker" {
+  ...
+  command = ["yarn", "worker:prod"]
+  environment = concat(local.common_environment, [
+    { name = "DISABLE_DB_MIGRATIONS",          value = "true" },
+    { name = "DISABLE_CRON_JOBS_REGISTRATION", value = "true" },
+  ])
+}</code></pre>
+
+<h2>6. Despliegue y evidencias</h2>
+<p>El ciclo de vida completo se gestiona con cuatro comandos:</p>
+<pre><code>terraform init      # descarga los providers
+terraform plan      # muestra los cambios: "Plan: 35 to add, 0 to change, 0 to destroy."
+terraform apply     # crea la infraestructura (~15 min, RDS y ElastiCache son lo más lento)
+terraform destroy   # elimina todos los recursos al terminar</code></pre>
+
+<p>Resultado del <code>terraform apply</code>:</p>
+<pre><code>Apply complete! Resources: 35 added, 0 changed, 0 destroyed.
+
+Outputs:
+crm_url        = "http://crm-alb-120518985.us-east-1.elb.amazonaws.com"
+ecs_cluster    = "crm-cluster"
+log_group      = "/ecs/crm-twenty"
+rds_endpoint   = "crm-postgres.c85sogacswm7.us-east-1.rds.amazonaws.com"
+redis_endpoint = "crm-redis.mvn724.0001.use1.cache.amazonaws.com"</code></pre>
+
+<p>Estado de los servicios en ECS (<code>aws ecs describe-services</code>): ambas tareas en ejecución.</p>
+<pre><code>| desired | running |      servicio       |
+|    1    |    1    |  crm-twenty-server  |
+|    1    |    1    |  crm-twenty-worker  |</code></pre>
+
+<p>Extracto de CloudWatch Logs: el servidor inicializa el cliente de Redis, registra las tareas programadas y arranca; el <em>worker</em> procesa trabajos de la cola almacenada en Redis.</p>
+<pre><code>twenty-server  [InstanceLoader] RedisClientModule dependencies initialized
+twenty-server  [CronRegisterAllCommand] Cron job registration completed: 32 successful, 0 failed, 3 skipped
+twenty-server  [NestApplication] Nest application successfully started
+twenty-worker  [BullMQDriver] Processing job repeat:AgentCronTriggerCronJob:1794261720000 ...</code></pre>
+
+<figure><img src="evidencias/01-bienvenida.png" alt="Pantalla de bienvenida de Twenty"><figcaption>Figura 2. Pantalla de bienvenida de Twenty CRM servida desde el ALB.</figcaption></figure>
+<h3>6.1 La aplicación en funcionamiento</h3>
+<p>Al crear el workspace, Twenty carga un conjunto de datos de ejemplo (empresas, personas, oportunidades y flujos de trabajo), que quedan almacenados en RDS PostgreSQL y permiten verificar el funcionamiento completo de la aplicación.</p>
+<figure><img src="evidencias/02-empresas.png" alt=""><figcaption>Figura 3. Empresas registradas en el CRM.</figcaption></figure>
+<figure><img src="evidencias/03-personas.png" alt=""><figcaption>Figura 4. Personas (contactos) asociadas a cada empresa.</figcaption></figure>
+<figure><img src="evidencias/04-oportunidades.png" alt=""><figcaption>Figura 5. Embudo de oportunidades de venta por etapa.</figcaption></figure>
+<figure><img src="evidencias/05-workflows.png" alt=""><figcaption>Figura 6. Flujos de trabajo activos, ejecutados por el <em>worker</em> a través de la cola en Redis.</figcaption></figure>
+<h3>6.2 Recursos en la consola de AWS</h3>
+<figure><img src="evidencias/06-ecs-cluster.png" alt=""><figcaption>Figura 7. Clúster <code>crm-cluster</code> en ECS con 2 tareas en ejecución sobre Fargate (0 instancias EC2).</figcaption></figure>
+<figure><img src="evidencias/07-ecs-servicios.png" alt=""><figcaption>Figura 8. Servicios <code>crm-twenty-server</code> y <code>crm-twenty-worker</code> activos, 1/1 tareas cada uno.</figcaption></figure>
+<figure><img src="evidencias/08-rds-lista.png" alt=""><figcaption>Figura 9. Instancia <code>crm-postgres</code> (PostgreSQL, db.t3.micro) disponible en RDS.</figcaption></figure>
+<figure><img src="evidencias/09-rds-detalle.png" alt=""><figcaption>Figura 10. Detalle de <code>crm-postgres</code>: 3 conexiones activas desde los contenedores; sin acceso desde internet.</figcaption></figure>
+<figure><img src="evidencias/10-redis-lista.png" alt=""><figcaption>Figura 11. Caché <code>crm-redis</code> (Redis 7.1, cache.t3.micro) disponible en ElastiCache.</figcaption></figure>
+<figure><img src="evidencias/11-redis-detalle.png" alt=""><figcaption>Figura 12. Detalle de <code>crm-redis</code> con el grupo de parámetros <code>crm-redis7</code> creado por Terraform.</figcaption></figure>
+
+<h2>7. Estimación de costos</h2>
+<p>Costos aproximados bajo demanda en us-east-1 (precios públicos de AWS; pueden variar):</p>
+<table>
+  <tr><th>Recurso</th><th>Configuración</th><th>USD / mes (aprox.)</th></tr>
+  <tr><td>ECS Fargate – server</td><td>1 vCPU, 2 GB</td><td>36</td></tr>
+  <tr><td>ECS Fargate – worker</td><td>0,5 vCPU, 1 GB</td><td>18</td></tr>
+  <tr><td>Application Load Balancer</td><td>1 ALB, tráfico bajo</td><td>17</td></tr>
+  <tr><td>RDS PostgreSQL</td><td>db.t3.micro, 20 GB gp3</td><td>15</td></tr>
+  <tr><td>ElastiCache Redis</td><td>cache.t3.micro</td><td>12</td></tr>
+  <tr><td>Direcciones IPv4 públicas</td><td>≈ 4 (ALB + tareas)</td><td>15</td></tr>
+  <tr><td>Secrets Manager, CloudWatch</td><td>uso mínimo</td><td>1–2</td></tr>
+  <tr><th colspan="2">Total estimado</th><th>≈ 115 USD/mes (≈ 3,8 USD/día)</th></tr>
+</table>
+<p>Para reducir costos se evitó el NAT Gateway (≈ 33 USD/mes adicionales) ubicando las tareas en subredes públicas con un grupo de seguridad que solo admite tráfico del ALB, y se usó una sola zona para las bases de datos. Gracias a la IaC, la infraestructura se destruye al terminar cada sesión de trabajo y se recrea en minutos para la presentación.</p>
+
+<h2>8. Problemas encontrados y soluciones</h2>
+<table>
+  <tr><th>Problema</th><th>Causa</th><th>Solución en el código</th></tr>
+  <tr><td>Riesgo de que Twenty no pudiera conectarse a PostgreSQL (detectado al revisar la documentación).</td><td>RDS PostgreSQL 16 obliga conexiones SSL por defecto (<code>rds.force_ssl = 1</code>).</td><td>Grupo de parámetros propio con <code>rds.force_ssl = 0</code>; el tráfico permanece dentro de la VPC privada.</td></tr>
+  <tr><td>Riesgo de perder trabajos en cola.</td><td>Redis por defecto puede expulsar llaves al llenarse la memoria.</td><td>Grupo de parámetros con <code>maxmemory-policy = noeviction</code>, como exige Twenty.</td></tr>
+  <tr><td>Primer arranque lento.</td><td>El servidor ejecuta todas las migraciones al iniciar.</td><td><code>health_check_grace_period_seconds = 600</code> y el <em>worker</em> se crea después del servidor.</td></tr>
+</table>
+
+<h2>9. Conclusiones</h2>
+<ul>
+  <li>La Infraestructura como Código permitió crear 35 recursos de AWS de forma repetible con un solo comando, y destruirlos con otro, lo que hizo viable trabajar con servicios de pago dentro de un presupuesto estudiantil.</li>
+  <li>Combinar una base de datos relacional y una en memoria no es redundante: PostgreSQL garantiza la integridad de la información comercial y Redis absorbe la caché y la cola de trabajos, mejorando la respuesta del sistema sin comprometer la consistencia.</li>
+  <li>Los servicios gestionados (RDS, ElastiCache, Fargate) trasladan al proveedor tareas operativas como parches, respaldos y aprovisionamiento de servidores, pero exigen conocer sus configuraciones por defecto: los dos ajustes de parámetros necesarios solo se descubrieron leyendo la documentación de AWS y de la aplicación.</li>
+  <li>La seguridad por capas (subredes privadas, grupos de seguridad encadenados y secretos fuera del código) se expresa de forma explícita y revisable en el código, algo difícil de garantizar con configuraciones manuales.</li>
+  <li>Un CRM de código abierto desplegado en infraestructura propia ofrece control total sobre los datos de los clientes, a cambio de asumir la responsabilidad de su operación y costos.</li>
+</ul>
+
+<h2>10. Referencias bibliográficas</h2>
+<div class="refs">
+  <p>Amazon Web Services. (2026). <em>Amazon ECS developer guide: AWS Fargate</em>. https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html</p>
+  <p>Amazon Web Services. (2026). <em>Amazon RDS for PostgreSQL user guide</em>. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html</p>
+  <p>Amazon Web Services. (2026). <em>Amazon ElastiCache user guide</em>. https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html</p>
+  <p>Brikman, Y. (2022). <em>Terraform: Up &amp; running</em> (3.ª ed.). O'Reilly Media.</p>
+  <p>Buttle, F., &amp; Maklan, S. (2019). <em>Customer relationship management: Concepts and technologies</em> (4.ª ed.). Routledge.</p>
+  <p>HashiCorp. (2026). <em>Terraform documentation</em>. https://developer.hashicorp.com/terraform/docs</p>
+  <p>HashiCorp. (2026). <em>AWS provider documentation</em>. Terraform Registry. https://registry.terraform.io/providers/hashicorp/aws/latest/docs</p>
+  <p>Morris, K. (2020). <em>Infrastructure as code: Dynamic systems for the cloud age</em> (2.ª ed.). O'Reilly Media.</p>
+  <p>Redis Ltd. (2026). <em>Key eviction</em>. https://redis.io/docs/latest/develop/reference/eviction/</p>
+  <p>Twenty. (2026). <em>Self-hosting: Docker Compose</em>. https://twenty.com/developers/section/self-hosting</p>
+</div>
+
+</td></tr></tbody>
+</table>
+</body>
+</html>

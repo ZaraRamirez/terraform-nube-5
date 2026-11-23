@@ -1,0 +1,6 @@
+region           = "us-east-1"
+project          = "crm"
+twenty_image_tag = "v2.56.1"
+
+# Solo en AWS Academy / Learner Lab (no permite crear roles IAM):
+# lab_role_arn = "arn:aws:iam::<ACCOUNT_ID>:role/LabRole"

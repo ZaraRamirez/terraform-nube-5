@@ -1,0 +1,1438 @@
+random_password.encryption_key: Refreshing state... [id=none]
+random_password.db: Refreshing state... [id=none]
+data.aws_availability_zones.available: Reading...
+aws_db_parameter_group.postgres: Refreshing state... [id=crm-postgres16]
+aws_secretsmanager_secret.twenty: Refreshing state... [id=arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB]
+aws_cloudwatch_log_group.twenty: Refreshing state... [id=/ecs/crm-twenty]
+aws_elasticache_parameter_group.redis: Refreshing state... [id=crm-redis7]
+aws_iam_role.execution[0]: Refreshing state... [id=crm-ecs-execution]
+aws_ecs_cluster.main: Refreshing state... [id=arn:aws:ecs:us-east-1:614162651666:cluster/crm-cluster]
+aws_vpc.main: Refreshing state... [id=vpc-08be2f3d5aae95c17]
+data.aws_availability_zones.available: Read complete after 1s [id=us-east-1]
+aws_iam_role_policy_attachment.execution[0]: Refreshing state... [id=crm-ecs-execution-20261109214839374700000003]
+aws_iam_role_policy.execution_secrets[0]: Refreshing state... [id=crm-ecs-execution:terraform-20261109214839150800000002]
+aws_internet_gateway.main: Refreshing state... [id=igw-001d779386ae92aa1]
+aws_subnet.public[1]: Refreshing state... [id=subnet-09de7422ba2d32295]
+aws_subnet.private[0]: Refreshing state... [id=subnet-0d40dc37badbfd52c]
+aws_security_group.alb: Refreshing state... [id=sg-0d1323963f308a3c7]
+aws_subnet.private[1]: Refreshing state... [id=subnet-0a9863220401ea2f2]
+aws_subnet.public[0]: Refreshing state... [id=subnet-06f1e064e42f63401]
+aws_lb_target_group.server: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:614162651666:targetgroup/crm-server-tg/2a2a8ee643ed5bad]
+aws_route_table.public: Refreshing state... [id=rtb-08d829423ee04e4f5]
+aws_security_group.ecs: Refreshing state... [id=sg-0aa4c42b9ff438494]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:614162651666:loadbalancer/app/crm-alb/34488457f668c8a3]
+aws_security_group.rds: Refreshing state... [id=sg-0cc64e2e03384004f]
+aws_security_group.redis: Refreshing state... [id=sg-0fbfec1bf5336270d]
+aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0dc998d42d56c814a]
+aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-01a19ca9b18280138]
+aws_elasticache_subnet_group.redis: Refreshing state... [id=crm-redis-subnets]
+aws_db_subnet_group.postgres: Refreshing state... [id=crm-db-subnets]
+aws_db_instance.postgres: Refreshing state... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI]
+aws_elasticache_cluster.redis: Refreshing state... [id=crm-redis]
+aws_secretsmanager_secret_version.twenty: Refreshing state... [id=arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB|terraform-20261109215805740200000005]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:614162651666:listener/app/crm-alb/34488457f668c8a3/4b09b7e3bcc0f920]
+aws_ecs_task_definition.worker: Refreshing state... [id=crm-twenty-worker]
+aws_ecs_task_definition.server: Refreshing state... [id=crm-twenty-server]
+aws_ecs_service.server: Refreshing state... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server]
+aws_ecs_service.worker: Refreshing state... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_cloudwatch_log_group.twenty will be destroyed
+  - resource "aws_cloudwatch_log_group" "twenty" {
+      - arn               = "arn:aws:logs:us-east-1:614162651666:log-group:/ecs/crm-twenty" -> null
+      - id                = "/ecs/crm-twenty" -> null
+      - log_group_class   = "STANDARD" -> null
+      - name              = "/ecs/crm-twenty" -> null
+      - retention_in_days = 7 -> null
+      - skip_destroy      = false -> null
+      - tags              = {} -> null
+      - tags_all          = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_db_instance.postgres will be destroyed
+  - resource "aws_db_instance" "postgres" {
+      - address                               = "crm-postgres.c85sogacswm7.us-east-1.rds.amazonaws.com" -> null
+      - allocated_storage                     = 20 -> null
+      - apply_immediately                     = true -> null
+      - arn                                   = "arn:aws:rds:us-east-1:614162651666:db:crm-postgres" -> null
+      - auto_minor_version_upgrade            = true -> null
+      - availability_zone                     = "us-east-1a" -> null
+      - backup_retention_period               = 1 -> null
+      - backup_target                         = "region" -> null
+      - backup_window                         = "05:42-06:12" -> null
+      - ca_cert_identifier                    = "rds-ca-rsa2048-g1" -> null
+      - copy_tags_to_snapshot                 = false -> null
+      - customer_owned_ip_enabled             = false -> null
+      - database_insights_mode                = "standard" -> null
+      - db_name                               = "twenty" -> null
+      - db_subnet_group_name                  = "crm-db-subnets" -> null
+      - dedicated_log_volume                  = false -> null
+      - delete_automated_backups              = true -> null
+      - deletion_protection                   = false -> null
+      - domain_dns_ips                        = [] -> null
+      - enabled_cloudwatch_logs_exports       = [] -> null
+      - endpoint                              = "crm-postgres.c85sogacswm7.us-east-1.rds.amazonaws.com:5432" -> null
+      - engine                                = "postgres" -> null
+      - engine_lifecycle_support              = "open-source-rds-extended-support" -> null
+      - engine_version                        = "16" -> null
+      - engine_version_actual                 = "16.13" -> null
+      - hosted_zone_id                        = "Z2R2ITUGPM61AM" -> null
+      - iam_database_authentication_enabled   = false -> null
+      - id                                    = "db-7B6PFVTKLXV34IXCV4OJJM2UGI" -> null
+      - identifier                            = "crm-postgres" -> null
+      - instance_class                        = "db.t3.micro" -> null
+      - iops                                  = 3000 -> null
+      - latest_restorable_time                = "2026-11-10T14:38:29Z" -> null
+      - license_model                         = "postgresql-license" -> null
+      - listener_endpoint                     = [] -> null
+      - maintenance_window                    = "sun:07:15-sun:07:45" -> null
+      - master_user_secret                    = [] -> null
+      - max_allocated_storage                 = 0 -> null
+      - monitoring_interval                   = 0 -> null
+      - multi_az                              = false -> null
+      - network_type                          = "IPV4" -> null
+      - option_group_name                     = "default:postgres-16" -> null
+      - parameter_group_name                  = "crm-postgres16" -> null
+      - password                              = (sensitive value) -> null
+      - password_wo                           = (write-only attribute) -> null
+      - performance_insights_enabled          = false -> null
+      - performance_insights_retention_period = 0 -> null
+      - port                                  = 5432 -> null
+      - publicly_accessible                   = false -> null
+      - replicas                              = [] -> null
+      - resource_id                           = "db-7B6PFVTKLXV34IXCV4OJJM2UGI" -> null
+      - skip_final_snapshot                   = true -> null
+      - status                                = "available" -> null
+      - storage_encrypted                     = false -> null
+      - storage_throughput                    = 125 -> null
+      - storage_type                          = "gp3" -> null
+      - tags                                  = {} -> null
+      - tags_all                              = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - username                              = "twenty" -> null
+      - vpc_security_group_ids                = [
+          - "sg-0cc64e2e03384004f",
+        ] -> null
+        # (15 unchanged attributes hidden)
+    }
+
+  # aws_db_parameter_group.postgres will be destroyed
+  - resource "aws_db_parameter_group" "postgres" {
+      - arn          = "arn:aws:rds:us-east-1:614162651666:pg:crm-postgres16" -> null
+      - description  = "Managed by Terraform" -> null
+      - family       = "postgres16" -> null
+      - id           = "crm-postgres16" -> null
+      - name         = "crm-postgres16" -> null
+      - skip_destroy = false -> null
+      - tags         = {} -> null
+      - tags_all     = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+        # (1 unchanged attribute hidden)
+
+      - parameter {
+          - apply_method = "immediate" -> null
+          - name         = "rds.force_ssl" -> null
+          - value        = "0" -> null
+        }
+    }
+
+  # aws_db_subnet_group.postgres will be destroyed
+  - resource "aws_db_subnet_group" "postgres" {
+      - arn                     = "arn:aws:rds:us-east-1:614162651666:subgrp:crm-db-subnets" -> null
+      - description             = "Managed by Terraform" -> null
+      - id                      = "crm-db-subnets" -> null
+      - name                    = "crm-db-subnets" -> null
+      - subnet_ids              = [
+          - "subnet-0a9863220401ea2f2",
+          - "subnet-0d40dc37badbfd52c",
+        ] -> null
+      - supported_network_types = [
+          - "IPV4",
+        ] -> null
+      - tags                    = {} -> null
+      - tags_all                = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                  = "vpc-08be2f3d5aae95c17" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_ecs_cluster.main will be destroyed
+  - resource "aws_ecs_cluster" "main" {
+      - arn      = "arn:aws:ecs:us-east-1:614162651666:cluster/crm-cluster" -> null
+      - id       = "arn:aws:ecs:us-east-1:614162651666:cluster/crm-cluster" -> null
+      - name     = "crm-cluster" -> null
+      - tags     = {} -> null
+      - tags_all = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+
+      - setting {
+          - name  = "containerInsights" -> null
+          - value = "disabled" -> null
+        }
+    }
+
+  # aws_ecs_service.server will be destroyed
+  - resource "aws_ecs_service" "server" {
+      - availability_zone_rebalancing      = "DISABLED" -> null
+      - cluster                            = "arn:aws:ecs:us-east-1:614162651666:cluster/crm-cluster" -> null
+      - deployment_maximum_percent         = 200 -> null
+      - deployment_minimum_healthy_percent = 100 -> null
+      - desired_count                      = 1 -> null
+      - enable_ecs_managed_tags            = false -> null
+      - enable_execute_command             = false -> null
+      - health_check_grace_period_seconds  = 600 -> null
+      - iam_role                           = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS" -> null
+      - id                                 = "arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server" -> null
+      - launch_type                        = "FARGATE" -> null
+      - name                               = "crm-twenty-server" -> null
+      - platform_version                   = "LATEST" -> null
+      - propagate_tags                     = "NONE" -> null
+      - scheduling_strategy                = "REPLICA" -> null
+      - tags                               = {} -> null
+      - tags_all                           = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - task_definition                    = "arn:aws:ecs:us-east-1:614162651666:task-definition/crm-twenty-server:1" -> null
+      - triggers                           = {} -> null
+      - wait_for_steady_state              = false -> null
+
+      - deployment_circuit_breaker {
+          - enable   = false -> null
+          - rollback = false -> null
+        }
+
+      - deployment_controller {
+          - type = "ECS" -> null
+        }
+
+      - load_balancer {
+          - container_name   = "twenty-server" -> null
+          - container_port   = 3000 -> null
+          - target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:614162651666:targetgroup/crm-server-tg/2a2a8ee643ed5bad" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - network_configuration {
+          - assign_public_ip = true -> null
+          - security_groups  = [
+              - "sg-0aa4c42b9ff438494",
+            ] -> null
+          - subnets          = [
+              - "subnet-06f1e064e42f63401",
+              - "subnet-09de7422ba2d32295",
+            ] -> null
+        }
+    }
+
+  # aws_ecs_service.worker will be destroyed
+  - resource "aws_ecs_service" "worker" {
+      - availability_zone_rebalancing      = "DISABLED" -> null
+      - cluster                            = "arn:aws:ecs:us-east-1:614162651666:cluster/crm-cluster" -> null
+      - deployment_maximum_percent         = 200 -> null
+      - deployment_minimum_healthy_percent = 100 -> null
+      - desired_count                      = 1 -> null
+      - enable_ecs_managed_tags            = false -> null
+      - enable_execute_command             = false -> null
+      - health_check_grace_period_seconds  = 0 -> null
+      - iam_role                           = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS" -> null
+      - id                                 = "arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker" -> null
+      - launch_type                        = "FARGATE" -> null
+      - name                               = "crm-twenty-worker" -> null
+      - platform_version                   = "LATEST" -> null
+      - propagate_tags                     = "NONE" -> null
+      - scheduling_strategy                = "REPLICA" -> null
+      - tags                               = {} -> null
+      - tags_all                           = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - task_definition                    = "arn:aws:ecs:us-east-1:614162651666:task-definition/crm-twenty-worker:1" -> null
+      - triggers                           = {} -> null
+      - wait_for_steady_state              = false -> null
+
+      - deployment_circuit_breaker {
+          - enable   = false -> null
+          - rollback = false -> null
+        }
+
+      - deployment_controller {
+          - type = "ECS" -> null
+        }
+
+      - network_configuration {
+          - assign_public_ip = true -> null
+          - security_groups  = [
+              - "sg-0aa4c42b9ff438494",
+            ] -> null
+          - subnets          = [
+              - "subnet-06f1e064e42f63401",
+              - "subnet-09de7422ba2d32295",
+            ] -> null
+        }
+    }
+
+  # aws_ecs_task_definition.server will be destroyed
+  - resource "aws_ecs_task_definition" "server" {
+      - arn                      = "arn:aws:ecs:us-east-1:614162651666:task-definition/crm-twenty-server:1" -> null
+      - arn_without_revision     = "arn:aws:ecs:us-east-1:614162651666:task-definition/crm-twenty-server" -> null
+      - container_definitions    = jsonencode(
+            [
+              - {
+                  - environment      = [
+                      - {
+                          - name  = "NODE_PORT"
+                          - value = "3000"
+                        },
+                      - {
+                          - name  = "REDIS_URL"
+                          - value = "redis://crm-redis.mvn724.0001.use1.cache.amazonaws.com:6379"
+                        },
+                      - {
+                          - name  = "SERVER_URL"
+                          - value = "http://crm-alb-120518985.us-east-1.elb.amazonaws.com"
+                        },
+                      - {
+                          - name  = "STORAGE_TYPE"
+                          - value = "local"
+                        },
+                    ]
+                  - essential        = true
+                  - image            = "twentycrm/twenty:v2.56.1"
+                  - logConfiguration = {
+                      - logDriver = "awslogs"
+                      - options   = {
+                          - awslogs-group         = "/ecs/crm-twenty"
+                          - awslogs-region        = "us-east-1"
+                          - awslogs-stream-prefix = "twenty"
+                        }
+                    }
+                  - mountPoints      = []
+                  - name             = "twenty-server"
+                  - portMappings     = [
+                      - {
+                          - containerPort = 3000
+                          - hostPort      = 3000
+                          - protocol      = "tcp"
+                        },
+                    ]
+                  - secrets          = [
+                      - {
+                          - name      = "APP_SECRET"
+                          - valueFrom = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB:APP_SECRET::"
+                        },
+                      - {
+                          - name      = "ENCRYPTION_KEY"
+                          - valueFrom = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB:ENCRYPTION_KEY::"
+                        },
+                      - {
+                          - name      = "PG_DATABASE_URL"
+                          - valueFrom = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB:PG_DATABASE_URL::"
+                        },
+                    ]
+                  - systemControls   = []
+                  - volumesFrom      = []
+                },
+            ]
+        ) -> null
+      - cpu                      = "1024" -> null
+      - enable_fault_injection   = false -> null
+      - execution_role_arn       = "arn:aws:iam::614162651666:role/crm-ecs-execution" -> null
+      - family                   = "crm-twenty-server" -> null
+      - id                       = "crm-twenty-server" -> null
+      - memory                   = "2048" -> null
+      - network_mode             = "awsvpc" -> null
+      - requires_compatibilities = [
+          - "FARGATE",
+        ] -> null
+      - revision                 = 1 -> null
+      - skip_destroy             = false -> null
+      - tags                     = {} -> null
+      - tags_all                 = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - track_latest             = false -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_ecs_task_definition.worker will be destroyed
+  - resource "aws_ecs_task_definition" "worker" {
+      - arn                      = "arn:aws:ecs:us-east-1:614162651666:task-definition/crm-twenty-worker:1" -> null
+      - arn_without_revision     = "arn:aws:ecs:us-east-1:614162651666:task-definition/crm-twenty-worker" -> null
+      - container_definitions    = jsonencode(
+            [
+              - {
+                  - command          = [
+                      - "yarn",
+                      - "worker:prod",
+                    ]
+                  - environment      = [
+                      - {
+                          - name  = "DISABLE_CRON_JOBS_REGISTRATION"
+                          - value = "true"
+                        },
+                      - {
+                          - name  = "DISABLE_DB_MIGRATIONS"
+                          - value = "true"
+                        },
+                      - {
+                          - name  = "REDIS_URL"
+                          - value = "redis://crm-redis.mvn724.0001.use1.cache.amazonaws.com:6379"
+                        },
+                      - {
+                          - name  = "SERVER_URL"
+                          - value = "http://crm-alb-120518985.us-east-1.elb.amazonaws.com"
+                        },
+                      - {
+                          - name  = "STORAGE_TYPE"
+                          - value = "local"
+                        },
+                    ]
+                  - essential        = true
+                  - image            = "twentycrm/twenty:v2.56.1"
+                  - logConfiguration = {
+                      - logDriver = "awslogs"
+                      - options   = {
+                          - awslogs-group         = "/ecs/crm-twenty"
+                          - awslogs-region        = "us-east-1"
+                          - awslogs-stream-prefix = "twenty"
+                        }
+                    }
+                  - mountPoints      = []
+                  - name             = "twenty-worker"
+                  - portMappings     = []
+                  - secrets          = [
+                      - {
+                          - name      = "APP_SECRET"
+                          - valueFrom = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB:APP_SECRET::"
+                        },
+                      - {
+                          - name      = "ENCRYPTION_KEY"
+                          - valueFrom = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB:ENCRYPTION_KEY::"
+                        },
+                      - {
+                          - name      = "PG_DATABASE_URL"
+                          - valueFrom = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB:PG_DATABASE_URL::"
+                        },
+                    ]
+                  - systemControls   = []
+                  - volumesFrom      = []
+                },
+            ]
+        ) -> null
+      - cpu                      = "512" -> null
+      - enable_fault_injection   = false -> null
+      - execution_role_arn       = "arn:aws:iam::614162651666:role/crm-ecs-execution" -> null
+      - family                   = "crm-twenty-worker" -> null
+      - id                       = "crm-twenty-worker" -> null
+      - memory                   = "1024" -> null
+      - network_mode             = "awsvpc" -> null
+      - requires_compatibilities = [
+          - "FARGATE",
+        ] -> null
+      - revision                 = 1 -> null
+      - skip_destroy             = false -> null
+      - tags                     = {} -> null
+      - tags_all                 = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - track_latest             = false -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_elasticache_cluster.redis will be destroyed
+  - resource "aws_elasticache_cluster" "redis" {
+      - apply_immediately          = true -> null
+      - arn                        = "arn:aws:elasticache:us-east-1:614162651666:cluster:crm-redis" -> null
+      - auto_minor_version_upgrade = "true" -> null
+      - availability_zone          = "us-east-1b" -> null
+      - az_mode                    = "single-az" -> null
+      - cache_nodes                = [
+          - {
+              - address           = "crm-redis.mvn724.0001.use1.cache.amazonaws.com"
+              - availability_zone = "us-east-1b"
+              - id                = "0001"
+              - port              = 6379
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - cluster_id                 = "crm-redis" -> null
+      - engine                     = "redis" -> null
+      - engine_version             = "7.1" -> null
+      - engine_version_actual      = "7.1.0" -> null
+      - id                         = "crm-redis" -> null
+      - ip_discovery               = "ipv4" -> null
+      - maintenance_window         = "thu:04:00-thu:05:00" -> null
+      - network_type               = "ipv4" -> null
+      - node_type                  = "cache.t3.micro" -> null
+      - num_cache_nodes            = 1 -> null
+      - parameter_group_name       = "crm-redis7" -> null
+      - port                       = 6379 -> null
+      - security_group_ids         = [
+          - "sg-0fbfec1bf5336270d",
+        ] -> null
+      - snapshot_retention_limit   = 0 -> null
+      - snapshot_window            = "09:30-10:30" -> null
+      - subnet_group_name          = "crm-redis-subnets" -> null
+      - tags                       = {} -> null
+      - tags_all                   = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - transit_encryption_enabled = false -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_elasticache_parameter_group.redis will be destroyed
+  - resource "aws_elasticache_parameter_group" "redis" {
+      - arn         = "arn:aws:elasticache:us-east-1:614162651666:parametergroup:crm-redis7" -> null
+      - description = "Managed by Terraform" -> null
+      - family      = "redis7" -> null
+      - id          = "crm-redis7" -> null
+      - name        = "crm-redis7" -> null
+      - tags        = {} -> null
+      - tags_all    = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+
+      - parameter {
+          - name  = "maxmemory-policy" -> null
+          - value = "noeviction" -> null
+        }
+    }
+
+  # aws_elasticache_subnet_group.redis will be destroyed
+  - resource "aws_elasticache_subnet_group" "redis" {
+      - arn         = "arn:aws:elasticache:us-east-1:614162651666:subnetgroup:crm-redis-subnets" -> null
+      - description = "Managed by Terraform" -> null
+      - id          = "crm-redis-subnets" -> null
+      - name        = "crm-redis-subnets" -> null
+      - subnet_ids  = [
+          - "subnet-0a9863220401ea2f2",
+          - "subnet-0d40dc37badbfd52c",
+        ] -> null
+      - tags        = {} -> null
+      - tags_all    = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id      = "vpc-08be2f3d5aae95c17" -> null
+    }
+
+  # aws_iam_role.execution[0] will be destroyed
+  - resource "aws_iam_role" "execution" {
+      - arn                   = "arn:aws:iam::614162651666:role/crm-ecs-execution" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "ecs-tasks.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2026-11-09T21:48:38Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "crm-ecs-execution" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "crm-ecs-execution" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - unique_id             = "AROAY57XSLIJDCBZHDPNL" -> null
+        # (3 unchanged attributes hidden)
+
+      - inline_policy {
+          - name   = "terraform-20261109214839150800000002" -> null
+          - policy = jsonencode(
+                {
+                  - Statement = [
+                      - {
+                          - Action   = "secretsmanager:GetSecretValue"
+                          - Effect   = "Allow"
+                          - Resource = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB"
+                        },
+                    ]
+                  - Version   = "2012-10-17"
+                }
+            ) -> null
+        }
+    }
+
+  # aws_iam_role_policy.execution_secrets[0] will be destroyed
+  - resource "aws_iam_role_policy" "execution_secrets" {
+      - id          = "crm-ecs-execution:terraform-20261109214839150800000002" -> null
+      - name        = "terraform-20261109214839150800000002" -> null
+      - name_prefix = "terraform-" -> null
+      - policy      = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = "secretsmanager:GetSecretValue"
+                      - Effect   = "Allow"
+                      - Resource = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB"
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - role        = "crm-ecs-execution" -> null
+    }
+
+  # aws_iam_role_policy_attachment.execution[0] will be destroyed
+  - resource "aws_iam_role_policy_attachment" "execution" {
+      - id         = "crm-ecs-execution-20261109214839374700000003" -> null
+      - policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy" -> null
+      - role       = "crm-ecs-execution" -> null
+    }
+
+  # aws_internet_gateway.main will be destroyed
+  - resource "aws_internet_gateway" "main" {
+      - arn      = "arn:aws:ec2:us-east-1:614162651666:internet-gateway/igw-001d779386ae92aa1" -> null
+      - id       = "igw-001d779386ae92aa1" -> null
+      - owner_id = "614162651666" -> null
+      - tags     = {
+          - "Name" = "crm-igw"
+        } -> null
+      - tags_all = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Name"      = "crm-igw"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id   = "vpc-08be2f3d5aae95c17" -> null
+    }
+
+  # aws_lb.main will be destroyed
+  - resource "aws_lb" "main" {
+      - arn                                                          = "arn:aws:elasticloadbalancing:us-east-1:614162651666:loadbalancer/app/crm-alb/34488457f668c8a3" -> null
+      - arn_suffix                                                   = "app/crm-alb/34488457f668c8a3" -> null
+      - client_keep_alive                                            = 3600 -> null
+      - desync_mitigation_mode                                       = "defensive" -> null
+      - dns_name                                                     = "crm-alb-120518985.us-east-1.elb.amazonaws.com" -> null
+      - drop_invalid_header_fields                                   = false -> null
+      - enable_cross_zone_load_balancing                             = true -> null
+      - enable_deletion_protection                                   = false -> null
+      - enable_http2                                                 = true -> null
+      - enable_tls_version_and_cipher_suite_headers                  = false -> null
+      - enable_waf_fail_open                                         = false -> null
+      - enable_xff_client_port                                       = false -> null
+      - enable_zonal_shift                                           = false -> null
+      - id                                                           = "arn:aws:elasticloadbalancing:us-east-1:614162651666:loadbalancer/app/crm-alb/34488457f668c8a3" -> null
+      - idle_timeout                                                 = 60 -> null
+      - internal                                                     = false -> null
+      - ip_address_type                                              = "ipv4" -> null
+      - load_balancer_type                                           = "application" -> null
+      - name                                                         = "crm-alb" -> null
+      - preserve_host_header                                         = false -> null
+      - security_groups                                              = [
+          - "sg-0d1323963f308a3c7",
+        ] -> null
+      - subnets                                                      = [
+          - "subnet-06f1e064e42f63401",
+          - "subnet-09de7422ba2d32295",
+        ] -> null
+      - tags                                                         = {} -> null
+      - tags_all                                                     = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                                                       = "vpc-08be2f3d5aae95c17" -> null
+      - xff_header_processing_mode                                   = "append" -> null
+      - zone_id                                                      = "Z35SXDOTRQ7X7K" -> null
+        # (3 unchanged attributes hidden)
+
+      - access_logs {
+          - enabled = false -> null
+            # (2 unchanged attributes hidden)
+        }
+
+      - connection_logs {
+          - enabled = false -> null
+            # (2 unchanged attributes hidden)
+        }
+
+      - subnet_mapping {
+          - subnet_id            = "subnet-06f1e064e42f63401" -> null
+            # (4 unchanged attributes hidden)
+        }
+      - subnet_mapping {
+          - subnet_id            = "subnet-09de7422ba2d32295" -> null
+            # (4 unchanged attributes hidden)
+        }
+    }
+
+  # aws_lb_listener.http will be destroyed
+  - resource "aws_lb_listener" "http" {
+      - arn                                                                 = "arn:aws:elasticloadbalancing:us-east-1:614162651666:listener/app/crm-alb/34488457f668c8a3/4b09b7e3bcc0f920" -> null
+      - id                                                                  = "arn:aws:elasticloadbalancing:us-east-1:614162651666:listener/app/crm-alb/34488457f668c8a3/4b09b7e3bcc0f920" -> null
+      - load_balancer_arn                                                   = "arn:aws:elasticloadbalancing:us-east-1:614162651666:loadbalancer/app/crm-alb/34488457f668c8a3" -> null
+      - port                                                                = 80 -> null
+      - protocol                                                            = "HTTP" -> null
+      - routing_http_response_server_enabled                                = true -> null
+      - tags                                                                = {} -> null
+      - tags_all                                                            = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+        # (11 unchanged attributes hidden)
+
+      - default_action {
+          - order            = 1 -> null
+          - target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:614162651666:targetgroup/crm-server-tg/2a2a8ee643ed5bad" -> null
+          - type             = "forward" -> null
+        }
+    }
+
+  # aws_lb_target_group.server will be destroyed
+  - resource "aws_lb_target_group" "server" {
+      - arn                                = "arn:aws:elasticloadbalancing:us-east-1:614162651666:targetgroup/crm-server-tg/2a2a8ee643ed5bad" -> null
+      - arn_suffix                         = "targetgroup/crm-server-tg/2a2a8ee643ed5bad" -> null
+      - deregistration_delay               = "300" -> null
+      - id                                 = "arn:aws:elasticloadbalancing:us-east-1:614162651666:targetgroup/crm-server-tg/2a2a8ee643ed5bad" -> null
+      - ip_address_type                    = "ipv4" -> null
+      - lambda_multi_value_headers_enabled = false -> null
+      - load_balancer_arns                 = [
+          - "arn:aws:elasticloadbalancing:us-east-1:614162651666:loadbalancer/app/crm-alb/34488457f668c8a3",
+        ] -> null
+      - load_balancing_algorithm_type      = "round_robin" -> null
+      - load_balancing_anomaly_mitigation  = "off" -> null
+      - load_balancing_cross_zone_enabled  = "use_load_balancer_configuration" -> null
+      - name                               = "crm-server-tg" -> null
+      - port                               = 3000 -> null
+      - protocol                           = "HTTP" -> null
+      - protocol_version                   = "HTTP1" -> null
+      - proxy_protocol_v2                  = false -> null
+      - slow_start                         = 0 -> null
+      - tags                               = {} -> null
+      - tags_all                           = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - target_type                        = "ip" -> null
+      - vpc_id                             = "vpc-08be2f3d5aae95c17" -> null
+        # (1 unchanged attribute hidden)
+
+      - health_check {
+          - enabled             = true -> null
+          - healthy_threshold   = 2 -> null
+          - interval            = 30 -> null
+          - matcher             = "200" -> null
+          - path                = "/healthz" -> null
+          - port                = "traffic-port" -> null
+          - protocol            = "HTTP" -> null
+          - timeout             = 10 -> null
+          - unhealthy_threshold = 5 -> null
+        }
+
+      - stickiness {
+          - cookie_duration = 86400 -> null
+          - enabled         = false -> null
+          - type            = "lb_cookie" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - target_failover {}
+
+      - target_group_health {
+          - dns_failover {
+              - minimum_healthy_targets_count      = "1" -> null
+              - minimum_healthy_targets_percentage = "off" -> null
+            }
+          - unhealthy_state_routing {
+              - minimum_healthy_targets_count      = 1 -> null
+              - minimum_healthy_targets_percentage = "off" -> null
+            }
+        }
+
+      - target_health_state {}
+    }
+
+  # aws_route_table.public will be destroyed
+  - resource "aws_route_table" "public" {
+      - arn              = "arn:aws:ec2:us-east-1:614162651666:route-table/rtb-08d829423ee04e4f5" -> null
+      - id               = "rtb-08d829423ee04e4f5" -> null
+      - owner_id         = "614162651666" -> null
+      - propagating_vgws = [] -> null
+      - route            = [
+          - {
+              - cidr_block                 = "0.0.0.0/0"
+              - gateway_id                 = "igw-001d779386ae92aa1"
+                # (11 unchanged attributes hidden)
+            },
+        ] -> null
+      - tags             = {
+          - "Name" = "crm-public-rt"
+        } -> null
+      - tags_all         = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Name"      = "crm-public-rt"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id           = "vpc-08be2f3d5aae95c17" -> null
+    }
+
+  # aws_route_table_association.public[0] will be destroyed
+  - resource "aws_route_table_association" "public" {
+      - id             = "rtbassoc-0dc998d42d56c814a" -> null
+      - route_table_id = "rtb-08d829423ee04e4f5" -> null
+      - subnet_id      = "subnet-06f1e064e42f63401" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_route_table_association.public[1] will be destroyed
+  - resource "aws_route_table_association" "public" {
+      - id             = "rtbassoc-01a19ca9b18280138" -> null
+      - route_table_id = "rtb-08d829423ee04e4f5" -> null
+      - subnet_id      = "subnet-09de7422ba2d32295" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_secretsmanager_secret.twenty will be destroyed
+  - resource "aws_secretsmanager_secret" "twenty" {
+      - arn                            = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB" -> null
+      - force_overwrite_replica_secret = false -> null
+      - id                             = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB" -> null
+      - name                           = "crm-twenty-secrets" -> null
+      - recovery_window_in_days        = 0 -> null
+      - tags                           = {} -> null
+      - tags_all                       = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_secretsmanager_secret_version.twenty will be destroyed
+  - resource "aws_secretsmanager_secret_version" "twenty" {
+      - arn              = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB" -> null
+      - id               = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB|terraform-20261109215805740200000005" -> null
+      - secret_id        = "arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB" -> null
+      - secret_string    = (sensitive value) -> null
+      - secret_string_wo = (write-only attribute) -> null
+      - version_id       = "terraform-20261109215805740200000005" -> null
+      - version_stages   = [
+          - "AWSCURRENT",
+        ] -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_security_group.alb will be destroyed
+  - resource "aws_security_group" "alb" {
+      - arn                    = "arn:aws:ec2:us-east-1:614162651666:security-group/sg-0d1323963f308a3c7" -> null
+      - description            = "HTTP publico hacia el balanceador" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-0d1323963f308a3c7" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "HTTP"
+              - from_port        = 80
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 80
+            },
+        ] -> null
+      - name                   = "crm-alb-sg" -> null
+      - owner_id               = "614162651666" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                 = "vpc-08be2f3d5aae95c17" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_security_group.ecs will be destroyed
+  - resource "aws_security_group" "ecs" {
+      - arn                    = "arn:aws:ec2:us-east-1:614162651666:security-group/sg-0aa4c42b9ff438494" -> null
+      - description            = "Tareas de ECS: solo el ALB llega al puerto 3000" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-0aa4c42b9ff438494" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = []
+              - description      = "Twenty server desde el ALB"
+              - from_port        = 3000
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = [
+                  - "sg-0d1323963f308a3c7",
+                ]
+              - self             = false
+              - to_port          = 3000
+            },
+        ] -> null
+      - name                   = "crm-ecs-sg" -> null
+      - owner_id               = "614162651666" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                 = "vpc-08be2f3d5aae95c17" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_security_group.rds will be destroyed
+  - resource "aws_security_group" "rds" {
+      - arn                    = "arn:aws:ec2:us-east-1:614162651666:security-group/sg-0cc64e2e03384004f" -> null
+      - description            = "PostgreSQL solo desde ECS" -> null
+      - egress                 = [] -> null
+      - id                     = "sg-0cc64e2e03384004f" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = []
+              - from_port        = 5432
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = [
+                  - "sg-0aa4c42b9ff438494",
+                ]
+              - self             = false
+              - to_port          = 5432
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - name                   = "crm-rds-sg" -> null
+      - owner_id               = "614162651666" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                 = "vpc-08be2f3d5aae95c17" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_security_group.redis will be destroyed
+  - resource "aws_security_group" "redis" {
+      - arn                    = "arn:aws:ec2:us-east-1:614162651666:security-group/sg-0fbfec1bf5336270d" -> null
+      - description            = "Redis solo desde ECS" -> null
+      - egress                 = [] -> null
+      - id                     = "sg-0fbfec1bf5336270d" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = []
+              - from_port        = 6379
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = [
+                  - "sg-0aa4c42b9ff438494",
+                ]
+              - self             = false
+              - to_port          = 6379
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - name                   = "crm-redis-sg" -> null
+      - owner_id               = "614162651666" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                 = "vpc-08be2f3d5aae95c17" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_subnet.private[0] will be destroyed
+  - resource "aws_subnet" "private" {
+      - arn                                            = "arn:aws:ec2:us-east-1:614162651666:subnet/subnet-0d40dc37badbfd52c" -> null
+      - assign_ipv6_address_on_creation                = false -> null
+      - availability_zone                              = "us-east-1a" -> null
+      - availability_zone_id                           = "use1-az1" -> null
+      - cidr_block                                     = "10.0.10.0/24" -> null
+      - enable_dns64                                   = false -> null
+      - enable_lni_at_device_index                     = 0 -> null
+      - enable_resource_name_dns_a_record_on_launch    = false -> null
+      - enable_resource_name_dns_aaaa_record_on_launch = false -> null
+      - id                                             = "subnet-0d40dc37badbfd52c" -> null
+      - ipv6_native                                    = false -> null
+      - map_customer_owned_ip_on_launch                = false -> null
+      - map_public_ip_on_launch                        = false -> null
+      - owner_id                                       = "614162651666" -> null
+      - private_dns_hostname_type_on_launch            = "ip-name" -> null
+      - tags                                           = {
+          - "Name" = "crm-private-0"
+        } -> null
+      - tags_all                                       = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Name"      = "crm-private-0"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                                         = "vpc-08be2f3d5aae95c17" -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_subnet.private[1] will be destroyed
+  - resource "aws_subnet" "private" {
+      - arn                                            = "arn:aws:ec2:us-east-1:614162651666:subnet/subnet-0a9863220401ea2f2" -> null
+      - assign_ipv6_address_on_creation                = false -> null
+      - availability_zone                              = "us-east-1b" -> null
+      - availability_zone_id                           = "use1-az2" -> null
+      - cidr_block                                     = "10.0.11.0/24" -> null
+      - enable_dns64                                   = false -> null
+      - enable_lni_at_device_index                     = 0 -> null
+      - enable_resource_name_dns_a_record_on_launch    = false -> null
+      - enable_resource_name_dns_aaaa_record_on_launch = false -> null
+      - id                                             = "subnet-0a9863220401ea2f2" -> null
+      - ipv6_native                                    = false -> null
+      - map_customer_owned_ip_on_launch                = false -> null
+      - map_public_ip_on_launch                        = false -> null
+      - owner_id                                       = "614162651666" -> null
+      - private_dns_hostname_type_on_launch            = "ip-name" -> null
+      - tags                                           = {
+          - "Name" = "crm-private-1"
+        } -> null
+      - tags_all                                       = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Name"      = "crm-private-1"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                                         = "vpc-08be2f3d5aae95c17" -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_subnet.public[0] will be destroyed
+  - resource "aws_subnet" "public" {
+      - arn                                            = "arn:aws:ec2:us-east-1:614162651666:subnet/subnet-06f1e064e42f63401" -> null
+      - assign_ipv6_address_on_creation                = false -> null
+      - availability_zone                              = "us-east-1a" -> null
+      - availability_zone_id                           = "use1-az1" -> null
+      - cidr_block                                     = "10.0.0.0/24" -> null
+      - enable_dns64                                   = false -> null
+      - enable_lni_at_device_index                     = 0 -> null
+      - enable_resource_name_dns_a_record_on_launch    = false -> null
+      - enable_resource_name_dns_aaaa_record_on_launch = false -> null
+      - id                                             = "subnet-06f1e064e42f63401" -> null
+      - ipv6_native                                    = false -> null
+      - map_customer_owned_ip_on_launch                = false -> null
+      - map_public_ip_on_launch                        = true -> null
+      - owner_id                                       = "614162651666" -> null
+      - private_dns_hostname_type_on_launch            = "ip-name" -> null
+      - tags                                           = {
+          - "Name" = "crm-public-0"
+        } -> null
+      - tags_all                                       = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Name"      = "crm-public-0"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                                         = "vpc-08be2f3d5aae95c17" -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_subnet.public[1] will be destroyed
+  - resource "aws_subnet" "public" {
+      - arn                                            = "arn:aws:ec2:us-east-1:614162651666:subnet/subnet-09de7422ba2d32295" -> null
+      - assign_ipv6_address_on_creation                = false -> null
+      - availability_zone                              = "us-east-1b" -> null
+      - availability_zone_id                           = "use1-az2" -> null
+      - cidr_block                                     = "10.0.1.0/24" -> null
+      - enable_dns64                                   = false -> null
+      - enable_lni_at_device_index                     = 0 -> null
+      - enable_resource_name_dns_a_record_on_launch    = false -> null
+      - enable_resource_name_dns_aaaa_record_on_launch = false -> null
+      - id                                             = "subnet-09de7422ba2d32295" -> null
+      - ipv6_native                                    = false -> null
+      - map_customer_owned_ip_on_launch                = false -> null
+      - map_public_ip_on_launch                        = true -> null
+      - owner_id                                       = "614162651666" -> null
+      - private_dns_hostname_type_on_launch            = "ip-name" -> null
+      - tags                                           = {
+          - "Name" = "crm-public-1"
+        } -> null
+      - tags_all                                       = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Name"      = "crm-public-1"
+          - "Project"   = "crm"
+        } -> null
+      - vpc_id                                         = "vpc-08be2f3d5aae95c17" -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_vpc.main will be destroyed
+  - resource "aws_vpc" "main" {
+      - arn                                  = "arn:aws:ec2:us-east-1:614162651666:vpc/vpc-08be2f3d5aae95c17" -> null
+      - assign_generated_ipv6_cidr_block     = false -> null
+      - cidr_block                           = "10.0.0.0/16" -> null
+      - default_network_acl_id               = "acl-0884193d9cd882e8f" -> null
+      - default_route_table_id               = "rtb-092119e9f0b4459ac" -> null
+      - default_security_group_id            = "sg-087536110d9c7883a" -> null
+      - dhcp_options_id                      = "dopt-08d2b1ff74994d293" -> null
+      - enable_dns_hostnames                 = true -> null
+      - enable_dns_support                   = true -> null
+      - enable_network_address_usage_metrics = false -> null
+      - id                                   = "vpc-08be2f3d5aae95c17" -> null
+      - instance_tenancy                     = "default" -> null
+      - ipv6_netmask_length                  = 0 -> null
+      - main_route_table_id                  = "rtb-092119e9f0b4459ac" -> null
+      - owner_id                             = "614162651666" -> null
+      - tags                                 = {
+          - "Name" = "crm-vpc"
+        } -> null
+      - tags_all                             = {
+          - "Course"    = "ITM - Computacion en la nube"
+          - "ManagedBy" = "terraform"
+          - "Name"      = "crm-vpc"
+          - "Project"   = "crm"
+        } -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # random_password.db will be destroyed
+  - resource "random_password" "db" {
+      - bcrypt_hash = (sensitive value) -> null
+      - id          = "none" -> null
+      - length      = 32 -> null
+      - lower       = true -> null
+      - min_lower   = 0 -> null
+      - min_numeric = 0 -> null
+      - min_special = 0 -> null
+      - min_upper   = 0 -> null
+      - number      = true -> null
+      - numeric     = true -> null
+      - result      = (sensitive value) -> null
+      - special     = false -> null
+      - upper       = true -> null
+    }
+
+  # random_password.encryption_key will be destroyed
+  - resource "random_password" "encryption_key" {
+      - bcrypt_hash = (sensitive value) -> null
+      - id          = "none" -> null
+      - length      = 48 -> null
+      - lower       = true -> null
+      - min_lower   = 0 -> null
+      - min_numeric = 0 -> null
+      - min_special = 0 -> null
+      - min_upper   = 0 -> null
+      - number      = true -> null
+      - numeric     = true -> null
+      - result      = (sensitive value) -> null
+      - special     = false -> null
+      - upper       = true -> null
+    }
+
+Plan: 0 to add, 0 to change, 35 to destroy.
+
+Changes to Outputs:
+  - crm_url        = "http://crm-alb-120518985.us-east-1.elb.amazonaws.com" -> null
+  - ecs_cluster    = "crm-cluster" -> null
+  - log_group      = "/ecs/crm-twenty" -> null
+  - rds_endpoint   = "crm-postgres.c85sogacswm7.us-east-1.rds.amazonaws.com" -> null
+  - redis_endpoint = "crm-redis.mvn724.0001.use1.cache.amazonaws.com" -> null
+aws_route_table_association.public[1]: Destroying... [id=rtbassoc-01a19ca9b18280138]
+aws_route_table_association.public[0]: Destroying... [id=rtbassoc-0dc998d42d56c814a]
+aws_iam_role_policy.execution_secrets[0]: Destroying... [id=crm-ecs-execution:terraform-20261109214839150800000002]
+aws_iam_role_policy_attachment.execution[0]: Destroying... [id=crm-ecs-execution-20261109214839374700000003]
+aws_ecs_service.worker: Destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker]
+aws_iam_role_policy.execution_secrets[0]: Destruction complete after 1s
+aws_iam_role_policy_attachment.execution[0]: Destruction complete after 1s
+aws_route_table_association.public[1]: Destruction complete after 1s
+aws_route_table_association.public[0]: Destruction complete after 1s
+aws_route_table.public: Destroying... [id=rtb-08d829423ee04e4f5]
+aws_route_table.public: Destruction complete after 1s
+aws_internet_gateway.main: Destroying... [id=igw-001d779386ae92aa1]
+aws_ecs_service.worker: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker, 00m10s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 00m10s elapsed]
+aws_ecs_service.worker: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker, 00m20s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 00m20s elapsed]
+aws_ecs_service.worker: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker, 00m30s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 00m30s elapsed]
+aws_ecs_service.worker: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker, 00m40s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 00m40s elapsed]
+aws_ecs_service.worker: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker, 00m50s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 00m50s elapsed]
+aws_ecs_service.worker: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker, 01m00s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 01m00s elapsed]
+aws_ecs_service.worker: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker, 01m10s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 01m10s elapsed]
+aws_ecs_service.worker: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-worker, 01m20s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 01m20s elapsed]
+aws_ecs_service.worker: Destruction complete after 1m22s
+aws_ecs_task_definition.worker: Destroying... [id=crm-twenty-worker]
+aws_ecs_service.server: Destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server]
+aws_ecs_task_definition.worker: Destruction complete after 1s
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 01m30s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 00m10s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 01m40s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 00m20s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 01m50s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 00m30s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 02m00s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 00m40s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 02m10s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 00m50s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 02m20s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 01m00s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 02m30s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 01m10s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 02m40s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 01m20s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 02m50s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 01m30s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 03m00s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 01m40s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 03m10s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 01m50s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 03m20s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 02m00s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 03m30s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 02m10s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 03m40s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 02m20s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 03m50s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 02m30s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 04m00s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 02m40s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 04m10s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 02m50s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 04m20s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 03m00s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 04m30s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 03m10s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 04m40s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 03m21s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 04m50s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 03m31s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 05m00s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 03m41s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 05m10s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 03m51s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 05m20s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 04m01s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 05m30s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 04m11s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 05m40s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 04m21s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 05m50s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 04m31s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 06m00s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 04m41s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 06m10s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 04m51s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 06m20s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 05m01s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 06m30s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 05m11s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 06m40s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 05m21s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 06m50s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 05m31s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 07m00s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 05m41s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 07m10s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 05m51s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 07m20s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 06m01s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 07m30s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 06m11s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 07m40s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 06m21s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 07m50s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 06m31s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 08m00s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 06m41s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 08m10s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 06m51s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 08m20s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 07m01s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 08m30s elapsed]
+aws_ecs_service.server: Still destroying... [id=arn:aws:ecs:us-east-1:614162651666:service/crm-cluster/crm-twenty-server, 07m11s elapsed]
+aws_ecs_service.server: Destruction complete after 7m15s
+aws_ecs_cluster.main: Destroying... [id=arn:aws:ecs:us-east-1:614162651666:cluster/crm-cluster]
+aws_ecs_task_definition.server: Destroying... [id=crm-twenty-server]
+aws_lb_listener.http: Destroying... [id=arn:aws:elasticloadbalancing:us-east-1:614162651666:listener/app/crm-alb/34488457f668c8a3/4b09b7e3bcc0f920]
+aws_ecs_task_definition.server: Destruction complete after 0s
+aws_secretsmanager_secret_version.twenty: Destroying... [id=arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB|terraform-20261109215805740200000005]
+aws_cloudwatch_log_group.twenty: Destroying... [id=/ecs/crm-twenty]
+aws_iam_role.execution[0]: Destroying... [id=crm-ecs-execution]
+aws_elasticache_cluster.redis: Destroying... [id=crm-redis]
+aws_ecs_cluster.main: Destruction complete after 1s
+aws_secretsmanager_secret_version.twenty: Destruction complete after 1s
+aws_secretsmanager_secret.twenty: Destroying... [id=arn:aws:secretsmanager:us-east-1:614162651666:secret:crm-twenty-secrets-PHfapB]
+aws_db_instance.postgres: Destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI]
+random_password.encryption_key: Destroying... [id=none]
+random_password.encryption_key: Destruction complete after 0s
+aws_lb_listener.http: Destruction complete after 1s
+aws_lb_target_group.server: Destroying... [id=arn:aws:elasticloadbalancing:us-east-1:614162651666:targetgroup/crm-server-tg/2a2a8ee643ed5bad]
+aws_lb.main: Destroying... [id=arn:aws:elasticloadbalancing:us-east-1:614162651666:loadbalancer/app/crm-alb/34488457f668c8a3]
+aws_cloudwatch_log_group.twenty: Destruction complete after 1s
+aws_lb_target_group.server: Destruction complete after 0s
+aws_secretsmanager_secret.twenty: Destruction complete after 0s
+aws_iam_role.execution[0]: Destruction complete after 2s
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 08m40s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 00m10s elapsed]
+aws_lb.main: Destruction complete after 10s
+aws_subnet.public[0]: Destroying... [id=subnet-06f1e064e42f63401]
+aws_subnet.public[1]: Destroying... [id=subnet-09de7422ba2d32295]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 00m10s elapsed]
+aws_internet_gateway.main: Still destroying... [id=igw-001d779386ae92aa1, 08m50s elapsed]
+aws_subnet.public[1]: Destruction complete after 6s
+aws_subnet.public[0]: Destruction complete after 7s
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 00m20s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 00m20s elapsed]
+aws_internet_gateway.main: Destruction complete after 8m59s
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 00m30s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 00m30s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 00m40s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 00m40s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 00m50s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 00m50s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 01m00s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 01m00s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 01m10s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 01m10s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 01m20s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 01m20s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 01m30s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 01m30s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 01m40s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 01m40s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 01m50s elapsed]
+aws_db_instance.postgres: Still destroying... [id=db-7B6PFVTKLXV34IXCV4OJJM2UGI, 01m50s elapsed]
+aws_db_instance.postgres: Destruction complete after 1m53s
+aws_db_subnet_group.postgres: Destroying... [id=crm-db-subnets]
+aws_db_parameter_group.postgres: Destroying... [id=crm-postgres16]
+random_password.db: Destroying... [id=none]
+aws_security_group.rds: Destroying... [id=sg-0cc64e2e03384004f]
+random_password.db: Destruction complete after 0s
+aws_db_parameter_group.postgres: Destruction complete after 0s
+aws_db_subnet_group.postgres: Destruction complete after 0s
+aws_security_group.rds: Destruction complete after 1s
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 02m00s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 02m10s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 02m20s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 02m30s elapsed]
+aws_elasticache_cluster.redis: Still destroying... [id=crm-redis, 02m40s elapsed]
+aws_elasticache_cluster.redis: Destruction complete after 2m44s
+aws_elasticache_subnet_group.redis: Destroying... [id=crm-redis-subnets]
+aws_elasticache_parameter_group.redis: Destroying... [id=crm-redis7]
+aws_security_group.redis: Destroying... [id=sg-0fbfec1bf5336270d]
+aws_elasticache_parameter_group.redis: Destruction complete after 0s
+aws_elasticache_subnet_group.redis: Destruction complete after 0s
+aws_subnet.private[1]: Destroying... [id=subnet-0a9863220401ea2f2]
+aws_subnet.private[0]: Destroying... [id=subnet-0d40dc37badbfd52c]
+aws_subnet.private[0]: Destruction complete after 1s
+aws_security_group.redis: Still destroying... [id=sg-0fbfec1bf5336270d, 00m10s elapsed]
+aws_subnet.private[1]: Still destroying... [id=subnet-0a9863220401ea2f2, 00m10s elapsed]
+aws_security_group.redis: Still destroying... [id=sg-0fbfec1bf5336270d, 00m20s elapsed]
+aws_subnet.private[1]: Still destroying... [id=subnet-0a9863220401ea2f2, 00m20s elapsed]
+aws_security_group.redis: Still destroying... [id=sg-0fbfec1bf5336270d, 00m30s elapsed]
+aws_subnet.private[1]: Still destroying... [id=subnet-0a9863220401ea2f2, 00m30s elapsed]
+aws_security_group.redis: Still destroying... [id=sg-0fbfec1bf5336270d, 00m40s elapsed]
+aws_subnet.private[1]: Still destroying... [id=subnet-0a9863220401ea2f2, 00m40s elapsed]
+aws_security_group.redis: Still destroying... [id=sg-0fbfec1bf5336270d, 00m50s elapsed]
+aws_subnet.private[1]: Still destroying... [id=subnet-0a9863220401ea2f2, 00m50s elapsed]
+aws_security_group.redis: Still destroying... [id=sg-0fbfec1bf5336270d, 01m00s elapsed]
+aws_subnet.private[1]: Still destroying... [id=subnet-0a9863220401ea2f2, 01m00s elapsed]
+aws_security_group.redis: Destruction complete after 1m2s
+aws_security_group.ecs: Destroying... [id=sg-0aa4c42b9ff438494]
+aws_security_group.ecs: Destruction complete after 1s
+aws_security_group.alb: Destroying... [id=sg-0d1323963f308a3c7]
+aws_subnet.private[1]: Destruction complete after 1m5s
+aws_security_group.alb: Destruction complete after 2s
+aws_vpc.main: Destroying... [id=vpc-08be2f3d5aae95c17]
+aws_vpc.main: Destruction complete after 1s
+
+Destroy complete! Resources: 35 destroyed.
