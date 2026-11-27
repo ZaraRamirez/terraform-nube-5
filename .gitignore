@@ -1,0 +1,20 @@
+# Terraform: estado, cache local y planes
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+crash.*.log
+*.log
+# .terraform.lock.hcl SI se versiona (no ignorar)
+.terraform.lock.hcl.bak
+
+# tfvars locales (infra/env/*.tfvars SI se versiona: no lleva secretos)
+bootstrap/terraform.tfvars
+terraform.tfvars
+*.auto.tfvars
+*.secret.tfvars
+
+# Varios
+.DS_Store

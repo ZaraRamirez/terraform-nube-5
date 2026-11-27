@@ -1,0 +1,12 @@
+# Copiar a terraform.tfvars (ignorado por git) y ajustar. Valores de ejemplo.
+region  = "us-east-1"
+project = "crm"
+
+# AWS Academy Learner Lab: dejar en false (no permite crear roles IAM).
+# Con true se crean el proveedor OIDC y el rol IAM para GitHub Actions.
+create_github_role = false
+# github_owner     = "mi-usuario"
+# github_repo      = "mi-repositorio"
+
+# Solo si la cuenta ya tiene el proveedor OIDC de GitHub (solo se permite uno por cuenta):
+# github_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com"

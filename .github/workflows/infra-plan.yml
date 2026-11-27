@@ -1,0 +1,87 @@
+name: infra-plan
+
+on:
+  pull_request:
+    paths:
+      - "infra/**"
+      - ".github/workflows/infra-plan.yml"
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: terraform-prod
+  cancel-in-progress: false
+
+env:
+  TF_IN_AUTOMATION: "true"
+  TF_VAR_alert_email: ${{ vars.ALERT_EMAIL }}
+  TF_VAR_lab_role_arn: ${{ vars.LAB_ROLE_ARN }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/aws-auth
+        with:
+          region: ${{ vars.AWS_REGION }}
+          role-arn: ${{ secrets.AWS_ROLE_ARN }}
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~1.10"
+
+      - name: fmt
+        run: terraform fmt -check -recursive
+
+      - name: init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
+            -backend-config="key=crm/prod/terraform.tfstate" \
+            -backend-config="region=${{ vars.AWS_REGION }}"
+
+      - name: validate
+        run: terraform validate
+
+      - name: plan
+        id: plan
+        continue-on-error: true
+        run: terraform plan -no-color -input=false -var-file=env/prod.tfvars
+
+      - name: Comentar el plan en el PR
+        uses: actions/github-script@v7
+        env:
+          PLAN: ${{ steps.plan.outputs.stdout }}
+          PLAN_ERR: ${{ steps.plan.outputs.stderr }}
+          OUTCOME: ${{ steps.plan.outcome }}
+        with:
+          script: |
+            const max = 60000;
+            let body = process.env.OUTCOME === 'success' ? process.env.PLAN : (process.env.PLAN_ERR || process.env.PLAN);
+            if (body.length > max) body = '... (truncado)\n' + body.slice(-max);
+            const marker = '<!-- infra-plan -->';
+            const text = `${marker}\n### Terraform plan: ${process.env.OUTCOME}\n<details><summary>Ver plan</summary>\n\n\`\`\`terraform\n${body}\n\`\`\`\n</details>`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const prev = comments.find(c => c.body && c.body.startsWith(marker));
+            if (prev) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: prev.id, body: text });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body: text });
+            }
+
+      - name: Fallar si el plan fallo
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
