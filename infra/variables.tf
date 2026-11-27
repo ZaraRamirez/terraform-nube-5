@@ -28,12 +28,6 @@ variable "redis_node_type" {
   default     = "cache.t3.micro"
 }
 
-variable "lab_role_arn" {
-  description = "ARN de un rol IAM existente (ej. LabRole en AWS Academy). Si es null o vacio se crea uno."
-  type        = string
-  default     = null
-}
-
 variable "alert_email" {
   description = "Correo que recibe las alertas de CloudWatch via SNS"
   type        = string

@@ -17,9 +17,9 @@ variable "state_bucket_name" {
 }
 
 variable "create_github_role" {
-  description = "Crear el proveedor OIDC y el rol para GitHub Actions. false en AWS Academy Learner Lab."
+  description = "Crear el proveedor OIDC y el rol para GitHub Actions"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "github_owner" {

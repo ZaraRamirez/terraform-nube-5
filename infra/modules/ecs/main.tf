@@ -12,14 +12,9 @@ resource "aws_cloudwatch_log_group" "twenty" {
   retention_in_days = 7
 }
 
-locals {
-  use_lab_role = var.lab_role_arn != null && var.lab_role_arn != ""
-}
-
 # Rol de ejecucion: descargar la imagen, escribir logs y leer el secreto
 resource "aws_iam_role" "execution" {
-  count = local.use_lab_role ? 0 : 1
-  name  = "${var.project}-ecs-execution"
+  name = "${var.project}-ecs-execution"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -32,14 +27,12 @@ resource "aws_iam_role" "execution" {
 }
 
 resource "aws_iam_role_policy_attachment" "execution" {
-  count      = local.use_lab_role ? 0 : 1
-  role       = aws_iam_role.execution[0].name
+  role       = aws_iam_role.execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 resource "aws_iam_role_policy" "execution_secrets" {
-  count = local.use_lab_role ? 0 : 1
-  role  = aws_iam_role.execution[0].id
+  role = aws_iam_role.execution.id
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -52,8 +45,7 @@ resource "aws_iam_role_policy" "execution_secrets" {
 }
 
 locals {
-  execution_role_arn = local.use_lab_role ? var.lab_role_arn : aws_iam_role.execution[0].arn
-  server_url         = "http://${var.alb_dns_name}"
+  server_url = "http://${var.alb_dns_name}"
 
   common_environment = [
     { name = "SERVER_URL", value = local.server_url },
@@ -83,7 +75,7 @@ resource "aws_ecs_task_definition" "server" {
   network_mode             = "awsvpc"
   cpu                      = 1024
   memory                   = 2048
-  execution_role_arn       = local.execution_role_arn
+  execution_role_arn       = aws_iam_role.execution.arn
 
   container_definitions = jsonencode([{
     name         = "twenty-server"
@@ -105,7 +97,7 @@ resource "aws_ecs_task_definition" "worker" {
   network_mode             = "awsvpc"
   cpu                      = 512
   memory                   = 1024
-  execution_role_arn       = local.execution_role_arn
+  execution_role_arn       = aws_iam_role.execution.arn
 
   container_definitions = jsonencode([{
     name      = "twenty-worker"

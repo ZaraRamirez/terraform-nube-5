@@ -47,7 +47,6 @@ module "ecs" {
   project           = var.project
   region            = var.region
   twenty_image      = var.twenty_image
-  lab_role_arn      = var.lab_role_arn
   public_subnet_ids = module.network.public_subnet_ids
   security_group_id = module.security.ecs_sg_id
   target_group_arn  = module.alb.target_group_arn

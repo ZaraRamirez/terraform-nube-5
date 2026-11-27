@@ -1,6 +1,5 @@
 # Valores del entorno de produccion (sin secretos).
 # alert_email llega por TF_VAR_alert_email (variable de repo ALERT_EMAIL).
-# En AWS Academy: exportar TF_VAR_lab_role_arn con el ARN de LabRole.
 region            = "us-east-1"
 project           = "crm"
 twenty_image      = "twentycrm/twenty:v2.56.1"

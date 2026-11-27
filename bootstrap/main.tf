@@ -36,7 +36,6 @@ resource "aws_s3_bucket_public_access_block" "state" {
 }
 
 # ---------- Rol de GitHub Actions (OIDC), opcional ----------
-# En AWS Academy Learner Lab no se pueden crear roles IAM: create_github_role = false
 resource "aws_iam_openid_connect_provider" "github" {
   count = var.create_github_role && var.github_oidc_provider_arn == null ? 1 : 0
 

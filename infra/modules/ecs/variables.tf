@@ -12,12 +12,6 @@ variable "twenty_image" {
   type        = string
 }
 
-variable "lab_role_arn" {
-  description = "ARN de un rol IAM existente (ej. LabRole). Si es null o vacio se crea uno."
-  type        = string
-  default     = null
-}
-
 variable "public_subnet_ids" {
   type = list(string)
 }

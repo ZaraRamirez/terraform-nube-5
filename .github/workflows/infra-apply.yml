@@ -19,7 +19,6 @@ concurrency:
 env:
   TF_IN_AUTOMATION: "true"
   TF_VAR_alert_email: ${{ vars.ALERT_EMAIL }}
-  TF_VAR_lab_role_arn: ${{ vars.LAB_ROLE_ARN }}
 
 jobs:
   apply:
@@ -31,13 +30,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/aws-auth
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          region: ${{ vars.AWS_REGION }}
-          role-arn: ${{ secrets.AWS_ROLE_ARN }}
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - uses: hashicorp/setup-terraform@v3
         with:
